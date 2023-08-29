@@ -13,7 +13,7 @@ func main() {
     {
       "expression": {
         "type": "NumericLiteral",
-        "value": 0
+        "value": 1
       },
       "type": "ExpressionStatement"
     }
@@ -29,5 +29,5 @@ func main() {
 	}
 
 	result := interp.Eval(ast)
-	fmt.Printf("%+v\n", result)
+	fmt.Printf("result: %+v\n", result)
 }
