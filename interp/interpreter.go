@@ -28,6 +28,10 @@ func Eval(node map[string]interface{}) interface{} {
 		return node["value"]
 	}
 
+	if nodeType == "StringLiteral" {
+		return node["value"]
+	}
+
 	panic("Not Implemented.")
 }
 
