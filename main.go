@@ -11,8 +11,31 @@ func main() {
   "body": [
     {
       "expression": {
-        "type": "StringLiteral",
-        "value": "hello"
+        "left": {
+          "type": "NumericLiteral",
+          "value": 4
+        },
+        "operator": "+",
+        "right": {
+          "type": "NumericLiteral",
+          "value": 3
+        },
+        "type": "BinaryExpression"
+      },
+      "type": "ExpressionStatement"
+    },
+    {
+      "expression": {
+        "left": {
+          "type": "NumericLiteral",
+          "value": 2
+        },
+        "operator": "-",
+        "right": {
+          "type": "NumericLiteral",
+          "value": 1
+        },
+        "type": "BinaryExpression"
       },
       "type": "ExpressionStatement"
     }

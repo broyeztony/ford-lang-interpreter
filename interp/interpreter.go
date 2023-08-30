@@ -32,6 +32,10 @@ func Eval(node map[string]interface{}) interface{} {
 		return node["value"]
 	}
 
+	if nodeType == "BooleanLiteral" {
+		return node["value"]
+	}
+
 	panic("Not Implemented.")
 }
 
