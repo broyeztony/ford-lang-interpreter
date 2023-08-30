@@ -1,12 +1,14 @@
-package main
+package tests
 
 import (
 	"encoding/json"
 	"fmt"
-	interp "ford-lang-interpreter/interp"
+	"ford-lang-interpreter/interp"
+	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
-func main() {
+func TestSimpleBinaryExpression(t *testing.T) {
 
 	input := `{
   "body": [
@@ -28,7 +30,6 @@ func main() {
   ],
   "type": "Program"
 }`
-
 	var ast map[string]interface{}
 	err := json.Unmarshal([]byte(input), &ast)
 	if err != nil {
@@ -36,6 +37,8 @@ func main() {
 		return
 	}
 
-	result := interp.Eval(ast)
-	fmt.Printf("result: %+v\n", result)
+	actual := interp.Eval(ast)
+	expected := float64(2)
+
+	assert.Equal(t, expected, actual)
 }

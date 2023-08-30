@@ -50,12 +50,12 @@ func evalExpressionStatement(stmt map[string]interface{}) interface{} {
 }
 
 func evalBinaryExpression(expression map[string]interface{}) interface{} {
+
 	operator := expression["operator"]
 	left := expression["left"]
 	right := expression["right"]
 
 	if operator == "+" {
-
 		leftResult := Eval(left.(map[string]interface{}))
 		rightResult := Eval(right.(map[string]interface{}))
 		return leftResult.(float64) + rightResult.(float64)
@@ -65,6 +65,18 @@ func evalBinaryExpression(expression map[string]interface{}) interface{} {
 		leftResult := Eval(left.(map[string]interface{}))
 		rightResult := Eval(right.(map[string]interface{}))
 		return leftResult.(float64) - rightResult.(float64)
+	}
+
+	if operator == "*" {
+		leftResult := Eval(left.(map[string]interface{}))
+		rightResult := Eval(right.(map[string]interface{}))
+		return leftResult.(float64) * rightResult.(float64)
+	}
+
+	if operator == "/" {
+		leftResult := Eval(left.(map[string]interface{}))
+		rightResult := Eval(right.(map[string]interface{}))
+		return leftResult.(float64) / rightResult.(float64)
 	}
 
 	panic(fmt.Sprintf("evalBinaryExpression unknown operator: %v", operator))
