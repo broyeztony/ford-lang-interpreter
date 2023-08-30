@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	interp "ford-lang-interpreter/interp"
 )
@@ -29,13 +28,6 @@ func main() {
   "type": "Program"
 }`
 
-	var ast map[string]interface{}
-	err := json.Unmarshal([]byte(input), &ast)
-	if err != nil {
-		fmt.Println("Error parsing program AST:", err)
-		return
-	}
-
-	result := interp.Eval(ast)
+	result := interp.Eval(interp.ParseAST(input))
 	fmt.Printf("result: %+v\n", result)
 }
