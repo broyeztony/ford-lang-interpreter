@@ -1,4 +1,4 @@
-This is the interpreter for the Ford programming language.
+This is the interpreter for the **Ford** programming language.
 
 It executes an Abstract Syntax Tree produced by the [Ford Parser](https://github.com/broyeztony/ford-lang-parser)
 
