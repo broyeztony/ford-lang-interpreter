@@ -10,32 +10,65 @@ func main() {
 	input := `{
   "body": [
     {
-      "expression": {
-        "left": {
-          "type": "NumericLiteral",
-          "value": 4
-        },
-        "operator": "+",
-        "right": {
-          "type": "NumericLiteral",
-          "value": 3
-        },
-        "type": "BinaryExpression"
-      },
-      "type": "ExpressionStatement"
+      "declarations": [
+        {
+          "id": {
+            "name": "x",
+            "type": "Identifier"
+          },
+          "initializer": {
+            "type": "NumericLiteral",
+            "value": 1
+          },
+          "type": "VariableDeclaration"
+        }
+      ],
+      "type": "VariableStatement"
+    },
+    {
+      "declarations": [
+        {
+          "id": {
+            "name": "y",
+            "type": "Identifier"
+          },
+          "initializer": {
+            "type": "NumericLiteral",
+            "value": 1
+          },
+          "type": "VariableDeclaration"
+        }
+      ],
+      "type": "VariableStatement"
+    },
+    {
+      "declarations": [
+        {
+          "id": {
+            "name": "z",
+            "type": "Identifier"
+          },
+          "initializer": {
+            "left": {
+              "name": "x",
+              "type": "Identifier"
+            },
+            "operator": "+",
+            "right": {
+              "name": "y",
+              "type": "Identifier"
+            },
+            "type": "BinaryExpression"
+          },
+          "type": "VariableDeclaration"
+        }
+      ],
+      "type": "VariableStatement"
     },
     {
       "expression": {
-        "left": {
-          "type": "NumericLiteral",
-          "value": 2
-        },
-        "operator": "-",
-        "right": {
-          "type": "NumericLiteral",
-          "value": 1
-        },
-        "type": "BinaryExpression"
+        "name": "z",
+        "type": "Identifier"
       },
       "type": "ExpressionStatement"
     }
@@ -43,6 +76,7 @@ func main() {
   "type": "Program"
 }`
 
-	result := interp.Eval(interp.ParseAST(input))
+	globalEnv := interp.NewEnvironment(nil)
+	result := interp.Eval(interp.ParseAST(input), globalEnv)
 	fmt.Printf("result: %+v\n", result)
 }
