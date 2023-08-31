@@ -100,7 +100,7 @@ The parser will produce:
 }
 ```
 
-Then executing this AST will output (logs will be different dependending on this interpreter's version)
+Then executing this AST, the interpreter will log (logs will be different dependending on this interpreter's version)
 ```shell
 Eval type: Program
 Eval type: VariableStatement
