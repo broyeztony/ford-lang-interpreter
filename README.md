@@ -2,7 +2,7 @@ This is the interpreter for the **Ford** programming language.
 
 It executes an Abstract Syntax Tree produced by the [Ford Parser](https://github.com/broyeztony/ford-lang-parser)
 
-See https://github.com/broyeztony/ford-lang-parser for the design and semantics of the language.
+See the [README](https://github.com/broyeztony/ford-lang-parser) for the design and semantics of the language.
 
 To execute a program using the interpreter, you first need to produce an AST using https://github.com/broyeztony/ford-lang-parser.
 From your local copy of the parser repository:
