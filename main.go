@@ -13,7 +13,7 @@ func main() {
       "declarations": [
         {
           "id": {
-            "name": "x",
+            "name": "a",
             "type": "Identifier"
           },
           "initializer": {
@@ -29,12 +29,12 @@ func main() {
       "declarations": [
         {
           "id": {
-            "name": "y",
+            "name": "b",
             "type": "Identifier"
           },
           "initializer": {
             "type": "NumericLiteral",
-            "value": 1
+            "value": 0
           },
           "type": "VariableDeclaration"
         }
@@ -42,32 +42,63 @@ func main() {
       "type": "VariableStatement"
     },
     {
-      "declarations": [
-        {
-          "id": {
-            "name": "z",
-            "type": "Identifier"
-          },
-          "initializer": {
-            "left": {
-              "name": "x",
-              "type": "Identifier"
+      "alternate": {
+        "body": [
+          {
+            "expression": {
+              "left": {
+                "name": "b",
+                "type": "Identifier"
+              },
+              "operator": "=",
+              "right": {
+                "type": "NumericLiteral",
+                "value": 30
+              },
+              "type": "AssignmentExpression"
             },
-            "operator": "+",
-            "right": {
-              "name": "y",
-              "type": "Identifier"
+            "type": "ExpressionStatement"
+          }
+        ],
+        "type": "BlockStatement"
+      },
+      "consequent": {
+        "body": [
+          {
+            "expression": {
+              "left": {
+                "name": "b",
+                "type": "Identifier"
+              },
+              "operator": "=",
+              "right": {
+                "type": "NumericLiteral",
+                "value": 20
+              },
+              "type": "AssignmentExpression"
             },
-            "type": "BinaryExpression"
-          },
-          "type": "VariableDeclaration"
-        }
-      ],
-      "type": "VariableStatement"
+            "type": "ExpressionStatement"
+          }
+        ],
+        "type": "BlockStatement"
+      },
+      "test": {
+        "left": {
+          "name": "a",
+          "type": "Identifier"
+        },
+        "operator": "<",
+        "right": {
+          "type": "NumericLiteral",
+          "value": 10
+        },
+        "type": "BinaryExpression"
+      },
+      "type": "IfStatement"
     },
     {
       "expression": {
-        "name": "z",
+        "name": "b",
         "type": "Identifier"
       },
       "type": "ExpressionStatement"

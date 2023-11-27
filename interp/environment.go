@@ -20,10 +20,25 @@ func (e *Environment) define(name string, value interface{}) interface{} {
 	return value
 }
 
+func (e *Environment) assign(name string, value interface{}) interface{} {
+	e.resolve(name).record[name] = value
+	return value
+}
+
 func (e *Environment) lookup(name string) interface{} {
-	value, ok := e.record[name]
-	if !ok {
+	return e.resolve(name).record[name]
+}
+
+func (e *Environment) resolve(name string) *Environment {
+
+	_, ok := e.record[name]
+	if ok {
+		return e
+	}
+
+	if e.parent == nil {
 		panic(fmt.Sprintf("ReferenceError. Variable '%v' is not defined.", name))
 	}
-	return value
+
+	return e.parent.resolve(name)
 }

@@ -13,8 +13,19 @@ func Eval(node map[string]interface{}, env *Environment) interface{} {
 		return evalBlock(node["body"].([]interface{}), env)
 	}
 
+	if nodeType == "BlockStatement" {
+		return evalBlock(node["body"].([]interface{}), env)
+	}
+
 	if nodeType == "ExpressionStatement" {
 		return evalExpressionStatement(node, env)
+	}
+	if nodeType == "IfStatement" {
+		return evalIfStatement(node, env)
+	}
+
+	if nodeType == "BinaryExpression" { // +, -, * ...
+		return evalBinaryExpression(node, env)
 	}
 
 	if nodeType == "BinaryExpression" {
@@ -37,13 +48,16 @@ func Eval(node map[string]interface{}, env *Environment) interface{} {
 	if nodeType == "VariableDeclaration" {
 		return evalVariableDeclaration(node, env)
 	}
+	if nodeType == "AssignmentExpression" {
+		return evalAssignmentExpression(node, env)
+	}
 
 	// variable access
 	if isVariableAccess(node) {
 		return env.lookup(node["name"].(string))
 	}
 
-	panic(fmt.Sprintf("Not Implemented: %v", node))
+	panic(fmt.Sprintf("Not Implemented: %v", node["type"]))
 }
 
 func evalBlock(block []interface{}, env *Environment) interface{} {
@@ -62,6 +76,17 @@ func evalExpressionStatement(stmt map[string]interface{}, env *Environment) inte
 
 	// fmt.Println("evalExpressionStatement stmt:", stmt)
 	return Eval(stmt["expression"].(map[string]interface{}), env)
+}
+
+func evalIfStatement(ifStmt map[string]interface{}, env *Environment) interface{} {
+	test := ifStmt["test"].(map[string]interface{})
+	consequent := ifStmt["consequent"].(map[string]interface{})
+	alternate := ifStmt["alternate"].(map[string]interface{})
+
+	if Eval(test, env).(bool) {
+		return Eval(consequent, env)
+	}
+	return Eval(alternate, env)
 }
 
 func evalBinaryExpression(expression map[string]interface{}, env *Environment) interface{} {
@@ -89,6 +114,23 @@ func evalBinaryExpression(expression map[string]interface{}, env *Environment) i
 		return leftResult.(float64) / rightResult.(float64)
 	}
 
+	// Logical operator
+	if operator == ">" {
+		return leftResult.(float64) > rightResult.(float64)
+	}
+	if operator == ">=" {
+		return leftResult.(float64) >= rightResult.(float64)
+	}
+	if operator == "<" {
+		return leftResult.(float64) < rightResult.(float64)
+	}
+	if operator == "<=" {
+		return leftResult.(float64) <= rightResult.(float64)
+	}
+	if operator == "==" {
+		return leftResult.(float64) == rightResult.(float64)
+	}
+
 	panic(fmt.Sprintf("evalBinaryExpression unknown operator: %v", operator))
 }
 
@@ -106,6 +148,28 @@ func evalVariableDeclaration(varDeclaration map[string]interface{}, env *Environ
 	variableName := varDeclaration["id"].(map[string]interface{})["name"].(string)
 	variableValue := Eval(varDeclaration["initializer"].(map[string]interface{}), env)
 	return env.define(variableName, variableValue)
+}
+
+func evalAssignmentExpression(assignmentExpr map[string]interface{}, env *Environment) interface{} {
+
+	fmt.Println("@ evalAssignmentExpression: ", assignmentExpr)
+
+	left := assignmentExpr["left"].(map[string]interface{})
+	right := assignmentExpr["right"].(map[string]interface{})
+	// we currently only treat simple assignment (i.e `=`)
+	// TODO: handle complex assignment (`+=`, `-=`, ...)
+	// operator := assignmentExpr["operator"].(string)
+
+	// TODO: assignment to property
+	if left["type"] == "MemberExpression" {
+		panic("Not implemented!")
+	}
+
+	// simple assignment
+	if left["type"] == "Identifier" {
+		return env.assign(left["name"].(string), Eval(right, env))
+	}
+	panic(fmt.Sprintf("AssignmentExpression can only be performed on Identifier node or MemberExpression node but got %v", left["type"]))
 }
 
 func isVariableAccess(node map[string]interface{}) bool {
