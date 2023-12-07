@@ -19,7 +19,7 @@ func main() {
 ```
 4. from your terminal, run ```❯ go run main.go```
 
-Example:
+### Example 1: basic arithmetic
 Given the following program written in Ford:
 ```ford
 let x = 1;
@@ -122,6 +122,7 @@ Eval type: Identifier
 result: 2
 ```
 
+### Example 2: native functions
 Below is another example making use of the Ford's `type(x)` native function. 
 Given the program:
 ```ford
