@@ -1,23 +1,31 @@
 {
   "body": [
     {
+      "declarations": [
+        {
+          "id": {
+            "name": "A",
+            "type": "Identifier"
+          },
+          "initializer": {
+            "type": "StringLiteral",
+            "value": "a string"
+          },
+          "type": "VariableDeclaration"
+        }
+      ],
+      "type": "VariableStatement"
+    },
+    {
       "expression": {
         "arguments": [
           {
-            "type": "StringLiteral",
-            "value": "some meaningful message"
-          },
-          {
-            "type": "StringLiteral",
-            "value": "printed"
-          },
-          {
-            "type": "StringLiteral",
-            "value": "to the console"
+            "name": "A",
+            "type": "Identifier"
           }
         ],
         "callee": {
-          "name": "print",
+          "name": "type",
           "type": "Identifier"
         },
         "type": "CallExpression"

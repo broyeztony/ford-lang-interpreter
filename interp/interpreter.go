@@ -2,6 +2,7 @@ package interp
 
 import (
 	"fmt"
+	"reflect"
 	"strings"
 )
 
@@ -216,9 +217,18 @@ func evalCallExpression(node map[string]interface{}, env *Environment) interface
 				messages = append(messages, value)
 			}
 		}
-		printNativeFn := env.Lookup(fnIdentifier).(func() func(...interface{}) (int, error))
-		printNativeFnCall := printNativeFn()
-		printNativeFnCall(strings.Join(messages, " "))
+		// printNativeFn := env.Lookup(fnIdentifier).(func() func(...interface{}) (int, error))
+		// printNativeFnCall := printNativeFn()
+		// printNativeFnCall(strings.Join(messages, " "))
+		fmt.Println(strings.Join(messages, " "))
+		break
+	case "type":
+		for _, item := range arguments {
+			if identifier, ok := item.(map[string]interface{})["name"].(string); ok {
+				identifierType := reflect.TypeOf(env.Lookup(identifier))
+				fmt.Printf("Key: %s, Value: %s\n", identifier, identifierType)
+			}
+		}
 		break
 	}
 
