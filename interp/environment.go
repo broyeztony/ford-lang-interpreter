@@ -14,19 +14,19 @@ func NewEnvironment(parent *Environment) *Environment {
 	return env
 }
 
-func (e *Environment) define(name string, value interface{}) interface{} {
+func (e *Environment) Define(name string, value interface{}) interface{} {
 	e.record[name] = value
-	fmt.Println("@Environment::define name", name, "value:", value)
+	fmt.Println("@Environment::Define name", name, "value:", value)
 	return value
 }
 
-func (e *Environment) assign(name string, value interface{}) interface{} {
+func (e *Environment) Assign(name string, value interface{}) interface{} {
 	e.resolve(name).record[name] = value
-	fmt.Println("@Environment::assign name", name, "value:", value)
+	fmt.Println("@Environment::Assign name", name, "value:", value)
 	return value
 }
 
-func (e *Environment) lookup(name string) interface{} {
+func (e *Environment) Lookup(name string) interface{} {
 	return e.resolve(name).record[name]
 }
 

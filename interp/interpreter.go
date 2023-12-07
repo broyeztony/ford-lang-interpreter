@@ -2,6 +2,7 @@ package interp
 
 import (
 	"fmt"
+	"strings"
 )
 
 func Eval(node map[string]interface{}, env *Environment) interface{} {
@@ -59,7 +60,11 @@ func Eval(node map[string]interface{}, env *Environment) interface{} {
 
 	// variable access
 	if isVariableAccess(node) {
-		return env.lookup(node["name"].(string))
+		return env.Lookup(node["name"].(string))
+	}
+
+	if nodeType == "CallExpression" {
+		return evalCallExpression(node, env)
 	}
 
 	panic(fmt.Sprintf("Not Implemented: %v", node["type"]))
@@ -168,12 +173,12 @@ func evalVariableDeclaration(varDeclaration map[string]interface{}, env *Environ
 		variableValue = Eval(varDeclaration["initializer"].(map[string]interface{}), env)
 	}
 
-	return env.define(variableName, variableValue)
+	return env.Define(variableName, variableValue)
 }
 
 func evalAssignmentExpression(assignmentExpr map[string]interface{}, env *Environment) interface{} {
 
-	fmt.Println("@ evalAssignmentExpression: ", assignmentExpr)
+	// fmt.Println("@ evalAssignmentExpression: ", assignmentExpr)
 
 	left := assignmentExpr["left"].(map[string]interface{})
 	right := assignmentExpr["right"].(map[string]interface{})
@@ -188,11 +193,34 @@ func evalAssignmentExpression(assignmentExpr map[string]interface{}, env *Enviro
 
 	// simple assignment
 	if left["type"] == "Identifier" {
-		return env.assign(left["name"].(string), Eval(right, env))
+		return env.Assign(left["name"].(string), Eval(right, env))
 	}
 	panic(fmt.Sprintf("AssignmentExpression can only be performed on Identifier node or MemberExpression node but got %v", left["type"]))
 }
 
 func isVariableAccess(node map[string]interface{}) bool {
 	return node["type"] == "Identifier"
+}
+
+func evalCallExpression(node map[string]interface{}, env *Environment) interface{} {
+	callee := node["callee"].(map[string]interface{})
+	arguments := node["arguments"].([]interface{})
+
+	fnIdentifier := callee["name"].(string)
+
+	switch fnIdentifier {
+	case "print":
+		var messages []string
+		for _, item := range arguments {
+			if value, ok := item.(map[string]interface{})["value"].(string); ok {
+				messages = append(messages, value)
+			}
+		}
+		printNativeFn := env.Lookup(fnIdentifier).(func() func(...interface{}) (int, error))
+		printNativeFnCall := printNativeFn()
+		printNativeFnCall(strings.Join(messages, " "))
+		break
+	}
+
+	return nil
 }
