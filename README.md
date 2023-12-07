@@ -28,7 +28,7 @@ let z = x + y;
 z;
 ```
 
-The parser will produce:
+The parser will output:
 ```json
 {
   "body": [
@@ -100,7 +100,7 @@ The parser will produce:
 }
 ```
 
-Then executing this AST, the interpreter will log (logs will be different dependending on this interpreter's version)
+Then executing this AST, the interpreter will log:
 ```shell
 Eval type: Program
 Eval type: VariableStatement
@@ -120,4 +120,64 @@ Eval type: Identifier
 Eval type: ExpressionStatement
 Eval type: Identifier
 result: 2
+```
+
+Below is another example making use of the Ford's `type(x)` native function. 
+Given the program:
+```ford
+let A = "a string";
+type(A);
+```
+
+The parser will output:
+```ford 
+{
+  "body": [
+    {
+      "declarations": [
+        {
+          "id": {
+            "name": "A",
+            "type": "Identifier"
+          },
+          "initializer": {
+            "type": "StringLiteral",
+            "value": "a string"
+          },
+          "type": "VariableDeclaration"
+        }
+      ],
+      "type": "VariableStatement"
+    },
+    {
+      "expression": {
+        "arguments": [
+          {
+            "name": "A",
+            "type": "Identifier"
+          }
+        ],
+        "callee": {
+          "name": "type",
+          "type": "Identifier"
+        },
+        "type": "CallExpression"
+      },
+      "type": "ExpressionStatement"
+    }
+  ],
+  "type": "Program"
+}
+```
+Then executing this AST, the interpreter will log:
+```shell
+Eval type: Program
+Eval type: VariableStatement
+Eval type: VariableDeclaration
+Eval type: StringLiteral
+@Environment::Define name A value: a string
+Eval type: ExpressionStatement
+Eval type: CallExpression
+Key: A, Value: string
+result: <nil>
 ```

@@ -8,7 +8,7 @@ import (
 
 func Eval(node map[string]interface{}, env *Environment) interface{} {
 
-	fmt.Println("Eval node", node)
+	// fmt.Println("Eval node", node)
 
 	nodeType := node["type"]
 	fmt.Printf("Eval type: %+v\n", nodeType)
