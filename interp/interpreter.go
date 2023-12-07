@@ -4,7 +4,7 @@ import "fmt"
 
 func Eval(node map[string]interface{}, env *Environment) interface{} {
 
-	// fmt.Println("Eval node", node)
+	fmt.Println("Eval node", node)
 
 	nodeType := node["type"]
 	fmt.Printf("Eval type: %+v\n", nodeType)
@@ -146,7 +146,12 @@ func evalVariableStatement(declarations []interface{}, env *Environment) interfa
 func evalVariableDeclaration(varDeclaration map[string]interface{}, env *Environment) interface{} {
 
 	variableName := varDeclaration["id"].(map[string]interface{})["name"].(string)
-	variableValue := Eval(varDeclaration["initializer"].(map[string]interface{}), env)
+	var variableValue interface{}
+
+	if varDeclaration["initializer"] != nil {
+		variableValue = Eval(varDeclaration["initializer"].(map[string]interface{}), env)
+	}
+
 	return env.define(variableName, variableValue)
 }
 

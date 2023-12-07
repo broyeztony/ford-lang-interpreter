@@ -1,0 +1,41 @@
+{
+  "body": [
+    {
+      "declarations": [
+        {
+          "id": {
+            "name": "a",
+            "type": "Identifier"
+          },
+          "initializer": null,
+          "type": "VariableDeclaration"
+        }
+      ],
+      "type": "VariableStatement"
+    },
+    {
+      "declarations": [
+        {
+          "id": {
+            "name": "b",
+            "type": "Identifier"
+          },
+          "initializer": {
+            "type": "BooleanLiteral",
+            "value": true
+          },
+          "type": "VariableDeclaration"
+        }
+      ],
+      "type": "VariableStatement"
+    },
+    {
+      "expression": {
+        "name": "b",
+        "type": "Identifier"
+      },
+      "type": "ExpressionStatement"
+    }
+  ],
+  "type": "Program"
+}
