@@ -7,7 +7,10 @@
             "name": "a",
             "type": "Identifier"
           },
-          "initializer": null,
+          "initializer": {
+            "type": "NumericLiteral",
+            "value": 0
+          },
           "type": "VariableDeclaration"
         }
       ],
@@ -22,12 +25,110 @@
           },
           "initializer": {
             "type": "BooleanLiteral",
-            "value": true
+            "value": false
           },
           "type": "VariableDeclaration"
         }
       ],
       "type": "VariableStatement"
+    },
+    {
+      "body": {
+        "body": [
+          {
+            "alternate": {
+              "body": [
+                {
+                  "expression": {
+                    "left": {
+                      "name": "b",
+                      "type": "Identifier"
+                    },
+                    "operator": "=",
+                    "right": {
+                      "type": "BooleanLiteral",
+                      "value": true
+                    },
+                    "type": "AssignmentExpression"
+                  },
+                  "type": "ExpressionStatement"
+                }
+              ],
+              "type": "BlockStatement"
+            },
+            "consequent": {
+              "body": [
+                {
+                  "expression": {
+                    "left": {
+                      "name": "b",
+                      "type": "Identifier"
+                    },
+                    "operator": "=",
+                    "right": {
+                      "type": "BooleanLiteral",
+                      "value": false
+                    },
+                    "type": "AssignmentExpression"
+                  },
+                  "type": "ExpressionStatement"
+                }
+              ],
+              "type": "BlockStatement"
+            },
+            "test": {
+              "left": {
+                "name": "b",
+                "type": "Identifier"
+              },
+              "operator": "==",
+              "right": {
+                "type": "BooleanLiteral",
+                "value": true
+              },
+              "type": "BinaryExpression"
+            },
+            "type": "IfStatement"
+          },
+          {
+            "expression": {
+              "left": {
+                "name": "a",
+                "type": "Identifier"
+              },
+              "operator": "=",
+              "right": {
+                "left": {
+                  "name": "a",
+                  "type": "Identifier"
+                },
+                "operator": "+",
+                "right": {
+                  "type": "NumericLiteral",
+                  "value": 1
+                },
+                "type": "BinaryExpression"
+              },
+              "type": "AssignmentExpression"
+            },
+            "type": "ExpressionStatement"
+          }
+        ],
+        "type": "BlockStatement"
+      },
+      "test": {
+        "left": {
+          "name": "a",
+          "type": "Identifier"
+        },
+        "operator": "<",
+        "right": {
+          "type": "NumericLiteral",
+          "value": 10
+        },
+        "type": "BinaryExpression"
+      },
+      "type": "WhileStatement"
     },
     {
       "expression": {

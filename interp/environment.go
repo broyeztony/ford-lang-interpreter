@@ -22,6 +22,7 @@ func (e *Environment) define(name string, value interface{}) interface{} {
 
 func (e *Environment) assign(name string, value interface{}) interface{} {
 	e.resolve(name).record[name] = value
+	fmt.Println("@Environment::assign name", name, "value:", value)
 	return value
 }
 

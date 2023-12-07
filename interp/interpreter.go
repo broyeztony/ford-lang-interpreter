@@ -1,6 +1,8 @@
 package interp
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func Eval(node map[string]interface{}, env *Environment) interface{} {
 
@@ -22,6 +24,9 @@ func Eval(node map[string]interface{}, env *Environment) interface{} {
 	}
 	if nodeType == "IfStatement" {
 		return evalIfStatement(node, env)
+	}
+	if nodeType == "WhileStatement" {
+		return evalWhileStatement(node, env)
 	}
 
 	if nodeType == "BinaryExpression" { // +, -, * ...
@@ -89,6 +94,20 @@ func evalIfStatement(ifStmt map[string]interface{}, env *Environment) interface{
 	return Eval(alternate, env)
 }
 
+func evalWhileStatement(whileStmt map[string]interface{}, env *Environment) interface{} {
+
+	test := whileStmt["test"].(map[string]interface{})
+	body := whileStmt["body"].(map[string]interface{})
+
+	var result interface{}
+	evalTest := Eval(test, env).(bool)
+	for evalTest {
+		result = Eval(body, env)
+		evalTest = Eval(test, env).(bool)
+	}
+	return result
+}
+
 func evalBinaryExpression(expression map[string]interface{}, env *Environment) interface{} {
 
 	operator := expression["operator"]
@@ -101,15 +120,12 @@ func evalBinaryExpression(expression map[string]interface{}, env *Environment) i
 	if operator == "+" {
 		return leftResult.(float64) + rightResult.(float64)
 	}
-
 	if operator == "-" {
 		return leftResult.(float64) - rightResult.(float64)
 	}
-
 	if operator == "*" {
 		return leftResult.(float64) * rightResult.(float64)
 	}
-
 	if operator == "/" {
 		return leftResult.(float64) / rightResult.(float64)
 	}
@@ -128,7 +144,7 @@ func evalBinaryExpression(expression map[string]interface{}, env *Environment) i
 		return leftResult.(float64) <= rightResult.(float64)
 	}
 	if operator == "==" {
-		return leftResult.(float64) == rightResult.(float64)
+		return leftResult == rightResult
 	}
 
 	panic(fmt.Sprintf("evalBinaryExpression unknown operator: %v", operator))
