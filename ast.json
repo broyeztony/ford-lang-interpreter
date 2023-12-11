@@ -1,36 +1,53 @@
 {
   "body": [
     {
-      "declarations": [
-        {
-          "id": {
-            "name": "A",
-            "type": "Identifier"
-          },
-          "initializer": {
-            "type": "StringLiteral",
-            "value": "a string"
-          },
-          "type": "VariableDeclaration"
-        }
-      ],
-      "type": "VariableStatement"
-    },
-    {
-      "expression": {
-        "arguments": [
+      "body": {
+        "body": [
           {
-            "name": "A",
-            "type": "Identifier"
+            "expression": {
+              "left": {
+                "name": "a",
+                "type": "Identifier"
+              },
+              "operator": "+",
+              "right": {
+                "left": {
+                  "name": "b",
+                  "type": "Identifier"
+                },
+                "operator": "*",
+                "right": {
+                  "name": "c",
+                  "type": "Identifier"
+                },
+                "type": "BinaryExpression"
+              },
+              "type": "BinaryExpression"
+            },
+            "type": "ExpressionStatement"
           }
         ],
-        "callee": {
-          "name": "type",
+        "type": "BlockStatement"
+      },
+      "name": {
+        "name": "myFunction",
+        "type": "Identifier"
+      },
+      "params": [
+        {
+          "name": "a",
           "type": "Identifier"
         },
-        "type": "CallExpression"
-      },
-      "type": "ExpressionStatement"
+        {
+          "name": "b",
+          "type": "Identifier"
+        },
+        {
+          "name": "c",
+          "type": "Identifier"
+        }
+      ],
+      "type": "FunctionDeclaration"
     }
   ],
   "type": "Program"

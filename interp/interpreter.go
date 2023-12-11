@@ -68,6 +68,10 @@ func Eval(node map[string]interface{}, env *Environment) interface{} {
 		return evalCallExpression(node, env)
 	}
 
+	if nodeType == "FunctionDeclaration" {
+		return evalFunctionDeclaration(node, env)
+	}
+
 	panic(fmt.Sprintf("Not Implemented: %v", node["type"]))
 }
 
@@ -165,6 +169,7 @@ func evalVariableStatement(declarations []interface{}, env *Environment) interfa
 	return result
 }
 
+// variable declaration
 func evalVariableDeclaration(varDeclaration map[string]interface{}, env *Environment) interface{} {
 
 	variableName := varDeclaration["id"].(map[string]interface{})["name"].(string)
@@ -175,6 +180,24 @@ func evalVariableDeclaration(varDeclaration map[string]interface{}, env *Environ
 	}
 
 	return env.Define(variableName, variableValue)
+}
+
+// function declaration
+func evalFunctionDeclaration(node map[string]interface{}, env *Environment) interface{} {
+
+	// extract function's name, params and body and install this in the current environment
+	// for now, it should be in the global environment
+	funcName := node["name"].(map[string]interface{})["name"].(string)
+	funcBody := node["body"].(map[string]interface{})
+	funcParams := node["params"].([]interface{})
+
+	funcDef := make(map[string]interface{})
+	funcDef["body"] = funcBody
+	funcDef["params"] = funcParams
+
+	fmt.Println("funcDef", funcDef)
+
+	return env.Define(funcName, funcDef)
 }
 
 func evalAssignmentExpression(assignmentExpr map[string]interface{}, env *Environment) interface{} {
